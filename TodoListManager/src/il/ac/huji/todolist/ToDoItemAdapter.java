@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+/* adapter for displaying tasks */
 public class ToDoItemAdapter extends ArrayAdapter<ToDoItem> {
 
+	// ctor
 	public ToDoItemAdapter(
 			TodoListManagerActivity activity, List<ToDoItem> items) {
 		super(activity, android.R.layout.simple_list_item_1, items);
@@ -21,6 +24,7 @@ public class ToDoItemAdapter extends ArrayAdapter<ToDoItem> {
 		View view = inflater.inflate(R.layout.row, null);
 		TextView title = (TextView)view.findViewById(R.id.txtTitle);
 		title.setText(item.getTitle());
+		// set colors of task according to position
 		if (position % 2 == 0) {
 			title.setTextColor(Color.RED);
 		}

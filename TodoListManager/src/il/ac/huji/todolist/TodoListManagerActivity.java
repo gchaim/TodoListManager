@@ -11,9 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+/* Main activity */
 public class TodoListManagerActivity extends Activity {
+	// adapter for displaying task
 	private ArrayAdapter<ToDoItem> _adapter;
+	// input text box
 	EditText _et;
+	// list of 'todo's
 	ListView _lv;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +38,14 @@ public class TodoListManagerActivity extends Activity {
 		return true;
 	}
 
+	/* what to do when select menu items */
 	public boolean onOptionsItemSelected(MenuItem item) { 
 
 		switch (item.getItemId()){
+		// add task
 		case (R.id.menuItemAdd):
 			_adapter.add(new ToDoItem(_et.getText().toString()));
+		// delete task
 		case (R.id.menuItemDelete):
 			_adapter.remove((ToDoItem) _lv.getSelectedItem());
 		}
