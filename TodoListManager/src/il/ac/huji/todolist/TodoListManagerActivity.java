@@ -45,6 +45,7 @@ public class TodoListManagerActivity extends Activity {
 		// add task
 		case (R.id.menuItemAdd):
 			_adapter.add(new ToDoItem(_et.getText().toString()));
+			break;
 		// delete task
 		case (R.id.menuItemDelete):
 			_adapter.remove((ToDoItem) _lv.getSelectedItem());
