@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-/* represents the activity of adding a new task */
+/* represents the activity of adding a new task to the list */
 public class AddNewTodoItemActivity extends Activity{
 
 	public void onCreate(Bundle unused) { 
