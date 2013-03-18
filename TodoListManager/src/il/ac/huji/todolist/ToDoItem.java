@@ -1,8 +1,12 @@
 package il.ac.huji.todolist;
 
+import java.util.Date;
+
 /* basic task object */
 public class ToDoItem {
 	private String _title;
-	public ToDoItem(String title){ _title=title; }
+	private Date _date;
+	public ToDoItem(String title, Date date){ _title=title; _date=date;}
 	public String getTitle(){ return _title; }
+	public Date getDate(){ return _date; }
 }

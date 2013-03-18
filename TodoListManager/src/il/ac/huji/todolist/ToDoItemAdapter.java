@@ -1,7 +1,10 @@
 package il.ac.huji.todolist;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import android.graphics.Color;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +25,25 @@ public class ToDoItemAdapter extends ArrayAdapter<ToDoItem> {
 		ToDoItem item = getItem(position);
 		LayoutInflater inflater = LayoutInflater.from(getContext());
 		View view = inflater.inflate(R.layout.row, null);
-		TextView title = (TextView)view.findViewById(R.id.txtTitle);
+		TextView title = (TextView)view.findViewById(R.id.txtTodoTitle);
 		title.setText(item.getTitle());
-		// set colors of task according to position
-		if (position % 2 == 0) {
-			title.setTextColor(Color.RED);
+		TextView date = (TextView)view.findViewById(R.id.txtTodoDueDate);
+
+		if (item.getDate()==null){
+			date.setText("No due date");
 		}
-		else {
-			title.setTextColor(Color.BLUE);
+		else{
+			// Check overdue tasks
+			Date cur = new Date(System.currentTimeMillis());
+			if (item.getDate().before(cur)){
+				title.setTextColor(Color.RED);
+				date.setTextColor(Color.RED);
+			}
+
+			String formatedDate;
+			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");  
+			formatedDate=df.format(item.getDate());
+			date.setText(formatedDate);
 		}
 		return view;
 	}
