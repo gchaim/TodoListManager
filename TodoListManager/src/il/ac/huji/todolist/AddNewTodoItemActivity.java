@@ -18,7 +18,7 @@ public class AddNewTodoItemActivity extends Activity{
 		setContentView(R.layout.add_item_activity); 
 		setTitle(R.string.add_item_title);
 
-		// OK buttin
+		// OK button
 		findViewById(R.id.btnOK).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				EditText edtNewItem = (EditText)findViewById(R.id.edtNewItem);
