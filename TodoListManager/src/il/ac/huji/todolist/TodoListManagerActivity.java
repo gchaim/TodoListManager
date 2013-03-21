@@ -97,7 +97,7 @@ public class TodoListManagerActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode==RESULT_OK){
-			_adapter.add(new ToDoItem(data.getExtras().getString("itemName"), (Date)data.getExtras().get("dueDate")));
+			_adapter.add(new ToDoItem(data.getExtras().getString("title"), (Date)data.getExtras().get("dueDate")));
 		}
 	}
 }

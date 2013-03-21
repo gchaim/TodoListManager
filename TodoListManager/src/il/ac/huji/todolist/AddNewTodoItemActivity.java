@@ -32,7 +32,7 @@ public class AddNewTodoItemActivity extends Activity{
 				} else {
 					// send back results
 					Intent resultIntent = new Intent();
-					resultIntent.putExtra("itemName", itemName);
+					resultIntent.putExtra("title", itemName);
 					resultIntent.putExtra("dueDate", date);
 					setResult(RESULT_OK, resultIntent);
 					finish();
