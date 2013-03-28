@@ -9,5 +9,6 @@
     <string name="add_item_title">Add New Item</string> 
     <string name="ok">OK</string>
     <string name="Cancel">Cancel</string>
-
+	<string name="parseApplication">x3cGc4dqi8vr1zRzdzKKkjK53zhOw4M3mFgMaTeH</string>
+	<string name="clientKey">WfrNkDnCJbC80KTJusmQY5cl19NTAXiywUjt9n6F</string>
 </resources>

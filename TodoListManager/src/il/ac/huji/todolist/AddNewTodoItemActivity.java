@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-/* represents the activity of adding a new task to the list */
+/* represents the activity of adding a new task */
 public class AddNewTodoItemActivity extends Activity{
 
 	public void onCreate(Bundle unused) { 
@@ -18,7 +18,7 @@ public class AddNewTodoItemActivity extends Activity{
 		setContentView(R.layout.add_item_activity); 
 		setTitle(R.string.add_item_title);
 
-		// OK button
+		// OK buttin
 		findViewById(R.id.btnOK).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				EditText edtNewItem = (EditText)findViewById(R.id.edtNewItem);

@@ -4,10 +4,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -17,25 +27,38 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 /* Main activity */
 public class TodoListManagerActivity extends Activity {
 	final static int ADD = 11;
 	// adapter for displaying task
-	private ArrayAdapter<ToDoItem> _adapter;
+	//private ArrayAdapter<ToDoItem> _adapter;
+//	SimpleCursorAdapter _adapter;
+	ToDoItemAdapter _adapter;
 	// input text box
 	EditText _et;
 	// list of 'todo's
 	ListView _lv;
+
+	private TodoDAL _tododal;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		_tododal=new TodoDAL(this);
+		
 		setContentView(R.layout.activity_todo_list_manager);
 		_et = (EditText)findViewById(R.id.edtNewItem);
 		_lv=(ListView)findViewById(R.id.lstTodoItems);
 		registerForContextMenu(_lv); 
-		List<ToDoItem> items = new ArrayList<ToDoItem>();
-		_adapter = 	new ToDoItemAdapter(this, items);
+
+	
+		String[] from = { "title", "due" };
+		int[] to = { R.id.txtTodoTitle, R.id.txtTodoDueDate };
+		 _adapter= new ToDoItemAdapter(this,
+				R.layout.row, _tododal.getCursor(), from, to);
 		_lv.setAdapter(_adapter);
 	}
 
@@ -44,7 +67,8 @@ public class TodoListManagerActivity extends Activity {
 			getMenuInflater().inflate(R.menu.task_menu, menu); 
 		
 			AdapterContextMenuInfo info = (AdapterContextMenuInfo)menuinfo;
-			String title=_adapter.getItem(info.position).getTitle();
+			String title=((Cursor)_adapter.getItem(info.position)).getString(1);
+			
 			menu.setHeaderTitle(title);
 			// set menu according to selected task
 			if (!title.startsWith("Call ")){
@@ -58,14 +82,18 @@ public class TodoListManagerActivity extends Activity {
 	public boolean onContextItemSelected(MenuItem item) { 
 		AdapterContextMenuInfo info = 
 		 (AdapterContextMenuInfo)item.getMenuInfo(); 
+		
+		Cursor c =(Cursor)_adapter.getItem(info.position);
+		ToDoItem tditem=new ToDoItem(c.getString(1),new Date(c.getLong(2)));
 		 switch (item.getItemId()){
 		 case R.id.menuItemDelete:
-			 _adapter.remove(_adapter.getItem(info.position));
+			_tododal.delete(tditem);
+				
+//			 _adapter.remove(_adapter.getItem(info.position));
 				break;
 		case R.id.menuItemCall:
 			// use dialer to execute the call
-			Intent dial = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+_adapter.getItem(info.position)
-					.getTitle().substring(5)));
+			Intent dial = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+c.getString(1).substring(5)));
 			startActivity(dial);
 		}
 		 return true;
@@ -97,7 +125,12 @@ public class TodoListManagerActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode==RESULT_OK){
-			_adapter.add(new ToDoItem(data.getExtras().getString("title"), (Date)data.getExtras().get("dueDate")));
+			ToDoItem tditem=new ToDoItem(data.getExtras().getString("title"), ((Date)data.getExtras().get("dueDate")));
+			//_tododal.insert(new ToDoItem("Hadar", null));
+			_tododal.update(new ToDoItem(data.getExtras().getString("title"), null));
+		//	break;
+			
+	//		_adapter.add(new ToDoItem(data.getExtras().getString("title"), (Date)data.getExtras().get("dueDate")));
 		}
 	}
 }
