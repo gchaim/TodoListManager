@@ -31,6 +31,8 @@ public class TodoDAL {
 	public TodoDAL(Context context) {
 		
 		Resources r = context.getResources();
+		
+		// Parse.com cloud interface registration
 		Parse.initialize(context, r.getString(R.string.parseApplication), r.getString(R.string.clientKey));
 		ParseUser.enableAutomaticUser();
 		TodoListdbHelper helper = new TodoListdbHelper(context);
