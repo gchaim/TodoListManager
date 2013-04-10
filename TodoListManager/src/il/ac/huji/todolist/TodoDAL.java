@@ -48,6 +48,9 @@ public class TodoDAL {
 	
 	// insert item to db/parse
 	 public boolean insert(ITodoItem todoItem) {
+		 	if (todoItem.getTitle()==null){
+		 		return false;
+		 	}
 		 	Date date=todoItem.getDueDate();
 			ContentValues values = new ContentValues();
 			values.put("title", todoItem.getTitle());
@@ -89,7 +92,7 @@ public class TodoDAL {
 			values.putNull("due");
 		}
 		long succ=db.update("todo", values, "title=?", new String[] {todoItem.getTitle()}); 
-		if (succ==FAILURE){
+		if (succ==FAILURE || succ==0){
 			return false;
 		}
 		cursor.requery();
@@ -125,7 +128,7 @@ public class TodoDAL {
 	 public boolean delete(ITodoItem todoItem) {
 			long succ=db.delete("todo", "title=?"
 					,new String[] {todoItem.getTitle()});
-			if (succ==FAILURE){
+			if (succ==FAILURE || succ==0){
 				return false;
 			}
 			cursor.requery();
