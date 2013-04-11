@@ -155,7 +155,7 @@ public class TodoDAL {
 			return true;
 	 }
 	 
-	 //return all items
+	 //return all items from the db
 	 public List<ITodoItem> all() {
 		 List<ITodoItem> list = new ArrayList<ITodoItem>();
 		 if (cursor.moveToFirst()) {
